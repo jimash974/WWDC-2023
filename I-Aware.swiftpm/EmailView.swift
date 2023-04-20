@@ -13,11 +13,14 @@ struct EmailView: View {
     @State private var image = ""
     @State private var nextPage = false
     @Binding var score: Int
+    @State var opacity = 0.0
+    @State private var show = false
+
 
     
     var body: some View {
         ZStack{
-            Color("MediumBlue")
+            Color(red: 103/255, green: 200/255, blue: 255/255)
                 .edgesIgnoringSafeArea(.all)
             
             VStack(spacing: 0){
@@ -28,9 +31,20 @@ struct EmailView: View {
                             .bold()
                             .font(.system(size: 25))
                             .padding(.top, 50)
+                            .foregroundColor(.black)
                         Spacer()
                     }
-                    HStack{
+                    .opacity(opacity)
+                    .animation(Animation.easeInOut(duration: 1).delay(1))
+                    .onAppear {
+                        withAnimation{
+                            opacity = 1.0
+//                                        padding = true
+                        }
+                    }
+                    
+                    VStack{
+                        HStack{
                         Image(systemName: "person.circle")
                             .resizable()
                             .aspectRatio(contentMode: .fit)
@@ -47,16 +61,37 @@ struct EmailView: View {
                             Text("to me")
                         }
                         Spacer()
+                        }
+                        .frame(width: 350)
+                        .padding(.leading, 20)
                     }
-                    .padding(.leading, 20)
+                    .opacity(opacity)
+                    .animation(Animation.easeInOut(duration: 1).delay(2))
+                    .onAppear {
+                        withAnimation{
+                            opacity = 1.0
+//                                        padding = true
+                        }
+                    }
                     
                     HorizontalLine()
                         .stroke(Color.gray, lineWidth: 1)
                         .frame(width: 380 ,height: 1)
+                        .opacity(opacity)
+                        .animation(Animation.easeInOut(duration: 1).delay(2))
+                        .onAppear {
+                            withAnimation{
+                                opacity = 1.0
+    //                                        padding = true
+                            }
+                        }
                     
                     VStack(alignment: .leading){
                         Text("Dear Customer\nYour account has just been blocked due to recent activity of unregistered user.")
                             .padding(.bottom, 30)
+                            .foregroundColor(.black)
+
+
                         Text("Click the link below to recover your account :")
                         Text("click here")
                             .bold()
@@ -65,9 +100,18 @@ struct EmailView: View {
                             .padding(.bottom, 100)
                         
                         Text("Thank you,\n CBA IT Support")
+                            .foregroundColor(.black)
                         
                     }
                     .frame(width: 350)
+                    .opacity(opacity)
+                    .animation(Animation.easeInOut(duration: 1).delay(3))
+                    .onAppear {
+                        withAnimation{
+                            opacity = 1.0
+//                                        padding = true
+                        }
+                    }
                     
                     Spacer()
                 }
@@ -85,57 +129,72 @@ struct EmailView: View {
                                 .clipShape(RoundedRectangle(cornerRadius: 16))
                             
                         )
-                        .background(Color("MediumGray"))
+                        .background(Color(red: 226/255, green: 222/255, blue: 222/255))
                         .clipShape(RoundedRectangle(cornerRadius: 16))
+                        .opacity(opacity)
+                        .animation(Animation.easeInOut(duration: 1).delay(5))
                     
-                    HStack{
-                        VStack(){
-                            Text("Click the link")
-                                .font(.system(size: 18))
-                                .bold()
-                            Text("to recover your account")
-                                .font(.system(size: 12))
-                                .bold()
-                        }
-                        .padding()
-                        .overlay(
-                            RoundedRectangle(cornerRadius: 16)
-                                .stroke(Color.white, lineWidth: 8)
-                                .clipShape(RoundedRectangle(cornerRadius: 16))
+                    if show{
+                        HStack{
+                            VStack(){
+                                Text("Click the link")
+                                    .font(.system(size: 18))
+                                    .bold()
+                                Text("to recover your account")
+                                    .font(.system(size: 12))
+                                    .bold()
+                            }
+                            .padding()
+                            .overlay(
+                                RoundedRectangle(cornerRadius: 16)
+                                    .stroke(Color.white, lineWidth: 8)
+                                    .clipShape(RoundedRectangle(cornerRadius: 16))
+                                
+                            )
+                            .background(Color(red: 226/255, green: 222/255, blue: 222/255))
+                            .clipShape(RoundedRectangle(cornerRadius: 16))
+                            .onTapGesture {
+                                popUp = true
+                                answer = "INCORRECT"
+                                image = "x.circle.fill"
+                            }
                             
-                        )
-                        .background(Color("MediumGray"))
-                        .clipShape(RoundedRectangle(cornerRadius: 16))
-                        .onTapGesture {
-                            popUp = true
-                            answer = "INCORRECT"
-                            image = "x.circle.fill"
+                            VStack(){
+                                Text("Block the sender ")
+                                    .font(.system(size: 18))
+                                    .bold()
+                                Text("to stop receiving email")
+                                    .font(.system(size: 12))
+                                    .bold()
+                            }
+                            .padding()
+                            .overlay(
+                                RoundedRectangle(cornerRadius: 16)
+                                    .stroke(Color.white, lineWidth: 8)
+                                    .clipShape(RoundedRectangle(cornerRadius: 16))
+                                
+                            )
+                            .background(Color(red: 226/255, green: 222/255, blue: 222/255))
+                            .clipShape(RoundedRectangle(cornerRadius: 16))
+                            .onTapGesture {
+                                popUp = true
+                                answer = "CORRECT"
+                                image = "checkmark.seal.fill"
+                                score = score + 1
+                            }
                         }
-                        
-                        VStack(){
-                            Text("Block the sender ")
-                                .font(.system(size: 18))
-                                .bold()
-                            Text("to stop receiving email")
-                                .font(.system(size: 12))
-                                .bold()
-                        }
-                        .padding()
-                        .overlay(
-                            RoundedRectangle(cornerRadius: 16)
-                                .stroke(Color.white, lineWidth: 8)
-                                .clipShape(RoundedRectangle(cornerRadius: 16))
-                            
-                        )
-                        .background(Color("MediumGray"))
-                        .clipShape(RoundedRectangle(cornerRadius: 16))
-                        .onTapGesture {
-                            popUp = true
-                            answer = "CORRECT"
-                            image = "checkmark.seal.fill"
-                            score = score + 1
-                        }
+                        .animation(Animation.easeInOut(duration: 1))
                     }
+                }
+                .onAppear {
+                    withAnimation{
+                        opacity = 1.0
+                    }
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 6.0, execute: {
+                        withAnimation{
+                            show = true
+                        }
+                    })
                 }
                 .padding()
                 .padding(.top, 20)
@@ -149,7 +208,6 @@ struct EmailView: View {
                 ScoreView(score: $score)
                     .transition(.move(edge: .trailing))
             }
-            
         }
     }
 }
@@ -220,7 +278,7 @@ struct EmailPopUpView: View{
                         .clipShape(RoundedRectangle(cornerRadius: 16))
                     
                 )
-                .background(Color("MediumBlue"))
+                .background(Color(red: 103/255, green: 200/255, blue: 255/255))
                 .clipShape(RoundedRectangle(cornerRadius: 16))
                 .onTapGesture {
                     popUp = false
@@ -239,7 +297,7 @@ struct EmailPopUpView: View{
                 .clipShape(RoundedRectangle(cornerRadius: 16))
             
         )
-        .background(Color("MediumGray"))
+        .background(Color(red: 226/255, green: 222/255, blue: 222/255))
         .clipShape(RoundedRectangle(cornerRadius: 16))
     }
 }

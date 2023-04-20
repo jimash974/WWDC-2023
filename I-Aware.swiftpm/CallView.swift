@@ -24,13 +24,16 @@ struct CallView: View {
     @State private var callSound = false
     
     @State var player: AVPlayer!
+    
+    @State private var show = false
+
 
     
     
     
     var body: some View {
         ZStack{
-            Color("MediumBlue")
+            Color(red: 103/255, green: 200/255, blue: 255/255)
                 .edgesIgnoringSafeArea(.all)
             
 //            NavigationView{
@@ -41,15 +44,23 @@ struct CallView: View {
                                 .resizable()
                                 .aspectRatio(contentMode: .fit)
                                 .frame(width: 100)
+                                .foregroundColor(.black)
+
                             Text("Unknown")
                                 .font(.system(size: 30))
                                 .bold()
+                                .foregroundColor(.black)
+
                             Text("(+62)8184462923")
                                 .font(.system(size: 20))
                                 .bold()
+                                .foregroundColor(.black)
+
                             Text("01.34")
                                 .font(.system(size: 15))
                                 .bold()
+                                .foregroundColor(.black)
+
                         }
                         .padding(.top, 60)
                         
@@ -59,10 +70,14 @@ struct CallView: View {
                                 .resizable()
                                 .aspectRatio(contentMode: .fit)
                                 .frame(width: 60)
+                                .foregroundColor(.black)
+
                             Image(systemName: "circle.grid.3x3.circle.fill")
                                 .resizable()
                                 .aspectRatio(contentMode: .fit)
                                 .frame(width: 60)
+                                .foregroundColor(.black)
+
                             Image(systemName: "speaker.wave.2.circle.fill")
                                 .resizable()
                                 .aspectRatio(contentMode: .fit)
@@ -77,12 +92,13 @@ struct CallView: View {
                         Spacer()
                     }
                     .frame(height: 500)
-                    .background(Color("MediumGray"))
+                    .background(Color(red: 226/255, green: 222/255, blue: 222/255))
                     
                     VStack(spacing: 15){
                         Text("What would you do ?")
                             .font(.system(size: 25))
                             .bold()
+                            .foregroundColor(.black)
                             .padding(30)
                             .overlay(
                                 RoundedRectangle(cornerRadius: 16)
@@ -90,63 +106,79 @@ struct CallView: View {
                                     .clipShape(RoundedRectangle(cornerRadius: 16))
                                 
                             )
-                            .background(Color("MediumGray"))
+                            .background(Color(red: 226/255, green: 222/255, blue: 222/255))
                             .clipShape(RoundedRectangle(cornerRadius: 16))
+                            .opacity(opacity2)
+                            .animation(Animation.easeInOut(duration: 1).delay(15))
                         
-                        HStack{
-                            VStack(){
-                                Text("Hang Up the phone")
-                                    .font(.system(size: 15))
-                                    .bold()
-                                Text("to ignore the person")
-                                    .font(.system(size: 12))
-                                    .bold()
-                            }
-                            .padding()
-                            .overlay(
-                                RoundedRectangle(cornerRadius: 16)
-                                    .stroke(Color.white, lineWidth: 8)
-                                    .clipShape(RoundedRectangle(cornerRadius: 16))
+                        if show{
+                            HStack{
+                                VStack(){
+                                    Text("Hang Up the phone")
+                                        .font(.system(size: 15))
+                                        .bold()
+                                        .foregroundColor(.black)
+                                    
+                                    Text("to ignore the person")
+                                        .font(.system(size: 12))
+                                        .bold()
+                                        .foregroundColor(.black)
+                                    
+                                }
+                                .padding()
+                                .overlay(
+                                    RoundedRectangle(cornerRadius: 16)
+                                        .stroke(Color.white, lineWidth: 8)
+                                        .clipShape(RoundedRectangle(cornerRadius: 16))
+                                    
+                                )
+                                .background(Color(red: 226/255, green: 222/255, blue: 222/255))
+                                .clipShape(RoundedRectangle(cornerRadius: 16))
+                                .onTapGesture {
+                                    popUp = true
+                                    answer = "CORRECT"
+                                    image = "checkmark.seal.fill"
+                                    score = score + 1
+                                }
                                 
-                            )
-                            .background(Color("MediumGray"))
-                            .clipShape(RoundedRectangle(cornerRadius: 16))
-                            .onTapGesture {
-                                popUp = true
-                                answer = "CORRECT"
-                                image = "checkmark.seal.fill"
-                                score = score + 1
+                                VStack(){
+                                    Text("Respond the person ")
+                                        .font(.system(size: 15))
+                                        .bold()
+                                        .foregroundColor(.black)
+                                    
+                                    Text("to give the information")
+                                        .font(.system(size: 12))
+                                        .bold()
+                                        .foregroundColor(.black)
+                                    
+                                }
+                                .padding()
+                                .overlay(
+                                    RoundedRectangle(cornerRadius: 16)
+                                        .stroke(Color.white, lineWidth: 8)
+                                        .clipShape(RoundedRectangle(cornerRadius: 16))
+                                )
+                                .background(Color(red: 226/255, green: 222/255, blue: 222/255))
+                                .clipShape(RoundedRectangle(cornerRadius: 16))
+                                .onTapGesture {
+                                    popUp = true
+                                    answer = "INCORRECT"
+                                    image = "x.circle.fill"
+                                }
                             }
-                            
-                            VStack(){
-                                Text("Respond the person ")
-                                    .font(.system(size: 15))
-                                    .bold()
-                                Text("to give the information")
-                                    .font(.system(size: 12))
-                                    .bold()
-                            }
-                            .padding()
-                            .overlay(
-                                RoundedRectangle(cornerRadius: 16)
-                                    .stroke(Color.white, lineWidth: 8)
-                                    .clipShape(RoundedRectangle(cornerRadius: 16))
-                            )
-                            .background(Color("MediumGray"))
-                            .clipShape(RoundedRectangle(cornerRadius: 16))
-                            .onTapGesture {
-                                popUp = true
-                                answer = "INCORRECT"
-                                image = "x.circle.fill"
-                            }
+                            .animation(Animation.easeInOut(duration: 1))
                         }
                     }
-                    .opacity(opacity2)
-                    .animation(Animation.easeInOut(duration: 1).delay(15))
                     .onAppear {
                         withAnimation{
                             opacity2 = 1.0
                         }
+                        DispatchQueue.main.asyncAfter(deadline: .now() + 16.0, execute: {
+                            withAnimation{
+                                show = true
+                            }
+                        })
                     }
                     .padding()
                     .padding(.top, 20)
@@ -161,12 +193,12 @@ struct CallView: View {
                                 print("Error loading sound file: \(error.localizedDescription)")
                             }
                         }
-//                        DispatchQueue.main.asyncAfter(deadline: .now() + 3.0, execute: {
-//                            call.play()
-//                        })
+                        DispatchQueue.main.asyncAfter(deadline: .now() + 3.0, execute: {
+                            call.play()
+                            call.volume = 3
+                        })
                     }
                 }
-//                .background(Color("MediumBlue"))
 //            }
             
             ZStack{
@@ -187,7 +219,7 @@ struct CallView: View {
                 }
             }
             .opacity(opacity)
-            .animation(Animation.easeInOut(duration: 1).delay(3))
+            .animation(Animation.easeInOut(duration: 3).delay(3))
             .onAppear {
                 withAnimation{
                     opacity = 0.0
@@ -199,8 +231,10 @@ struct CallView: View {
                         print("Error loading sound file: \(error.localizedDescription)")
                     }
                 }
-//                audioPlayer.play()
-//                callSound = true
+                DispatchQueue.main.asyncAfter(deadline: .now() + 1.4, execute: {
+                    audioPlayer.play()
+                })
+                callSound = true
             }
 
             
@@ -209,7 +243,7 @@ struct CallView: View {
             }
             if nextPage{
                 EmailView(score: $score)
-                    .transition(.move(edge: .trailing))
+//                    .transition(.move(edge: .trailing))
             }
         }
     }
@@ -239,26 +273,32 @@ struct CallPopUpView: View{
                 .resizable()
                 .aspectRatio(contentMode: .fit)
                 .frame(width: 100)
+                .foregroundColor(.black)
+
             Text("\(answer)")
                 .font(.system(size: 25))
                 .bold()
                 .padding(.bottom, 5)
+                .foregroundColor(.black)
 
             
             Text("Being called by unknown number is one of the social engineering technique.")
                 .bold()
                 .multilineTextAlignment(.center)
                 .padding(.bottom, 5)
+                .foregroundColor(.black)
             
             Text("Based on that speech, the person is trying to get your personal information. You should never give your personal information to stranger.")
                 .bold()
                 .multilineTextAlignment(.center)
                 .padding(.bottom, 5)
+                .foregroundColor(.black)
             
             Text("So you should hang up the phone !")
                 .bold()
                 .multilineTextAlignment(.center)
                 .padding(.bottom, 5)
+                .foregroundColor(.black)
             
             Text("UNDERSTAND")
                 .foregroundColor(.white)
@@ -273,7 +313,8 @@ struct CallPopUpView: View{
                         .clipShape(RoundedRectangle(cornerRadius: 16))
                     
                 )
-                .background(Color("MediumBlue"))
+                .foregroundColor(.black)
+                .background(Color(red: 103/255, green: 200/255, blue: 255/255))
                 .clipShape(RoundedRectangle(cornerRadius: 16))
                 .onTapGesture {
                     popUp = false
@@ -292,7 +333,7 @@ struct CallPopUpView: View{
                 .clipShape(RoundedRectangle(cornerRadius: 16))
             
         )
-        .background(Color("MediumGray"))
+        .background(Color(red: 226/255, green: 222/255, blue: 222/255))
         .clipShape(RoundedRectangle(cornerRadius: 16))
     }
 }

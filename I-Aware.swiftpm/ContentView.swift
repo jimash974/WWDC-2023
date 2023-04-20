@@ -5,22 +5,20 @@ struct ContentView: View {
 
         NavigationView{
             ZStack{
-                Color("MediumBlue")
+                Color(red: 103/255, green: 200/255, blue: 255/255)
                     .edgesIgnoringSafeArea(.all)
                 
-                VStack{
+                VStack(spacing: 0){
                     Image("Logo")
                         .resizable()
                         .aspectRatio(contentMode: .fit)
-                        .frame(width: 420)
-                    
+                        .frame(width: 620)
                     
                     Text("Play !")
                         .font(.custom("SF Compact Rounded", size: 68))
                         .foregroundColor(.white)
-                    
-    //                Spacer()
-                    
+                        .padding(.top, -30)
+                                        
                     NavigationLink(destination: ChatView().navigationBarBackButtonHidden(true)) {
                         VStack{
                             Image(systemName: "play")
@@ -38,25 +36,13 @@ struct ContentView: View {
                         )
                         .background(Color.blue)
                         .clipShape(RoundedRectangle(cornerRadius: 16))
-                        .padding(.top, 50)
+                        .padding(.top, 30)
                     }
                     Spacer()
                 }
+                .padding(.top, 50)
             }
         }.navigationViewStyle(.stack)
-        
-//        VStack {
-//            Spacer()
-//            Image(systemName: "globe")
-//                .imageScale(.large)
-//                .foregroundColor(.accentColor)
-//
-//            Image("Logo")
-//                .resizable()
-//                .frame(width: 200, height: 200)
-//            Text("Hello, world!")
-//            Spacer()
-//        }
-//        .background()
     }
 }
+
