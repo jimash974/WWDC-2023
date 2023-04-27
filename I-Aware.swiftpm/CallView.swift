@@ -231,7 +231,7 @@ struct CallView: View {
                         print("Error loading sound file: \(error.localizedDescription)")
                     }
                 }
-                DispatchQueue.main.asyncAfter(deadline: .now() + 1.4, execute: {
+                DispatchQueue.main.asyncAfter(deadline: .now() + 1.0, execute: {
                     audioPlayer.play()
                 })
                 callSound = true
@@ -243,18 +243,10 @@ struct CallView: View {
             }
             if nextPage{
                 EmailView(score: $score)
-//                    .transition(.move(edge: .trailing))
             }
         }
     }
 }
-
-//struct CallView_Previews: PreviewProvider {
-//    static var previews: some View {
-//        CallView()
-//    }
-//}
-
 
 
 struct CallPopUpView: View{
@@ -324,8 +316,6 @@ struct CallPopUpView: View{
                 }
         }
         .frame(width: 300)
-    //            .padding(.top, 20)
-    //            .padding(.bottom, 20)
         .padding(20)
         .overlay(
             RoundedRectangle(cornerRadius: 16)

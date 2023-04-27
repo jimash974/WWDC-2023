@@ -288,8 +288,6 @@ struct EmailPopUpView: View{
                 }
         }
         .frame(width: 300)
-    //            .padding(.top, 20)
-    //            .padding(.bottom, 20)
         .padding(20)
         .overlay(
             RoundedRectangle(cornerRadius: 16)

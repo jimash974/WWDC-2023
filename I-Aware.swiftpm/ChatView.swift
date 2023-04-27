@@ -294,7 +294,7 @@ struct ChatPopUpView: View{
                         .padding(.bottom, 5)
                     
                     
-                    Text("Common image extension\n are .jpg, .png, .jpeg, etc.")
+                    Text("Common image extension\n are .jpg, .png, .jpeg, .HEIC.")
                         .bold()
                         .multilineTextAlignment(.center)
                         .foregroundColor(.black)
